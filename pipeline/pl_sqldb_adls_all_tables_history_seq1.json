@@ -385,10 +385,12 @@
 		],
 		"parameters": {
 			"ctbl_schema": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "dbo"
 			},
 			"ctbl_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "control_table"
 			},
 			"trigger_segment": {
 				"type": "string"
