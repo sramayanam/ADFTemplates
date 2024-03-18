@@ -5,6 +5,9 @@
 			"referenceName": "SqlServeronprem",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ingestion pattern datasets"
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": []
