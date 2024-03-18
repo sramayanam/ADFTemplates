@@ -254,7 +254,11 @@
 										"inputs": [
 											{
 												"referenceName": "SqlServerTable1",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"ds_schema": "@item().source_path",
+													"ds_tablename": "@item().source_table"
+												}
 											}
 										],
 										"outputs": [
