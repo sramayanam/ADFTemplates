@@ -14,10 +14,13 @@
 		"PostgreSql1_password": {
 			"value": ""
 		},
-		"SQLDatabase_connectionString": {
+		"sqlserversecured_connectionString": {
 			"value": ""
 		},
-		"sqlserversecured_connectionString": {
+		"SqlServeronprem_connectionString": {
+			"value": ""
+		},
+		"SQLDatabase_connectionString": {
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
