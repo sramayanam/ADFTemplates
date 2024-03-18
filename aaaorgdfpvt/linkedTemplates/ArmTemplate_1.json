@@ -645,8 +645,8 @@
 								"referenceName": "SqlServerTable1",
 								"type": "DatasetReference",
 								"parameters": {
-									"ds_schema": "Production",
-									"ds_tablename": "Product"
+									"ds_schema": "@pipeline().parameters.ctbl_schema",
+									"ds_tablename": "@pipeline().parameters.ctbl_name"
 								}
 							},
 							"firstRowOnly": false
@@ -830,6 +830,9 @@
 														"type": "AzureBlobFSReadSettings",
 														"recursive": true,
 														"enablePartitionDiscovery": false
+													},
+													"formatSettings": {
+														"type": "ParquetReadSettings"
 													}
 												}
 											},
