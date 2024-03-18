@@ -110,11 +110,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"source": {
-												"type": "AzureSqlSource",
-												"sqlReaderQuery": {
-													"value": "@concat('select * from ', item().source_path,'.',item().source_table,' where ',replace(replace(item().watermark_where_cond,'watermark_val',replace(item().watermark_val,'T', ' ')),'watermark_end_val',variables('watermark_end_val_wo_tz')))",
-													"type": "Expression"
-												},
+												"type": "SqlServerSource",
 												"queryTimeout": "02:00:00",
 												"partitionOption": "None"
 											},
@@ -139,11 +135,11 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "ds_sql_db_any_table",
+												"referenceName": "SqlServerTable1",
 												"type": "DatasetReference",
 												"parameters": {
-													"ds_schema": "schemaname",
-													"ds_tablename": "table"
+													"ds_schema": "Production",
+													"ds_tablename": "Product"
 												}
 											}
 										],
