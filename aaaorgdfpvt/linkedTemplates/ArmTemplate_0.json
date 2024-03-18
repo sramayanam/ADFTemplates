@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
 		"PostgreSql1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'PostgreSql1'"
@@ -89,6 +93,19 @@
 			"properties": {
 				"type": "SelfHosted",
 				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
 			},
 			"dependsOn": []
 		},
@@ -452,6 +469,318 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_synapse1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "source_table",
+						"type": "varchar"
+					},
+					{
+						"name": "dest_table",
+						"type": "varchar"
+					},
+					{
+						"name": "source_path",
+						"type": "varchar"
+					},
+					{
+						"name": "target_path",
+						"type": "varchar"
+					},
+					{
+						"name": "flow_sequence",
+						"type": "varchar"
+					},
+					{
+						"name": "run_status",
+						"type": "varchar"
+					},
+					{
+						"name": "qstring",
+						"type": "varchar"
+					},
+					{
+						"name": "watermark_col",
+						"type": "nvarchar"
+					},
+					{
+						"name": "watermark_val",
+						"type": "nvarchar"
+					},
+					{
+						"name": "key_column",
+						"type": "varchar"
+					},
+					{
+						"name": "source_name",
+						"type": "varchar"
+					},
+					{
+						"name": "load_type",
+						"type": "varchar"
+					},
+					{
+						"name": "start_run",
+						"type": "varchar"
+					},
+					{
+						"name": "source_id",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "control_table"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_sql_db_any_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_schema": {
+						"type": "string"
+					},
+					"ds_tablename": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().ds_schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().ds_tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_any_file13')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_folder": {
+						"type": "string"
+					},
+					"ds_filename": {
+						"type": "string"
+					},
+					"ds_container": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().ds_filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().ds_folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().ds_container",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_any_file131')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_folder": {
+						"type": "string"
+					},
+					"ds_filename": {
+						"type": "string"
+					},
+					"ds_container": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().ds_filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().ds_folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().ds_container",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_synapse_anytable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_schema": {
+						"type": "string"
+					},
+					"ds_table": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "source_table",
+						"type": "varchar"
+					},
+					{
+						"name": "dest_table",
+						"type": "varchar"
+					},
+					{
+						"name": "source_path",
+						"type": "varchar"
+					},
+					{
+						"name": "target_path",
+						"type": "varchar"
+					},
+					{
+						"name": "flow_sequence",
+						"type": "varchar"
+					},
+					{
+						"name": "run_status",
+						"type": "varchar"
+					},
+					{
+						"name": "qstring",
+						"type": "varchar"
+					},
+					{
+						"name": "watermark_col",
+						"type": "nvarchar"
+					},
+					{
+						"name": "watermark_val",
+						"type": "nvarchar"
+					},
+					{
+						"name": "key_column",
+						"type": "varchar"
+					},
+					{
+						"name": "source_name",
+						"type": "varchar"
+					},
+					{
+						"name": "load_type",
+						"type": "varchar"
+					},
+					{
+						"name": "start_run",
+						"type": "varchar"
+					},
+					{
+						"name": "source_id",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().ds_schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().ds_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -533,1144 +862,47 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_adls_synapse_all_tables_history_seq2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/df_adls_synapse_current')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": {
-									"value": "@concat('select * from ',pipeline().parameters.ctbl_schema,'.',pipeline().parameters.ctbl_name, ' where  trigger_segment= ''', pipeline().parameters.trigger_segment,''' and start_run=''Y'' and load_type =''', pipeline().parameters.p_load_type,''' and flow_sequence=2 and run_status =''N''')",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
+				"folder": {
+					"name": "Ingestion pattern dataflows"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
 							"dataset": {
-								"referenceName": "ds_synapse",
-								"type": "DatasetReference",
-								"parameters": {}
+								"referenceName": "ds_adls_parquet_any_file131",
+								"type": "DatasetReference"
 							},
-							"firstRowOnly": false
+							"name": "source1"
 						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.value",
-								"type": "Expression"
-							},
-							"batchCount": 5,
-							"activities": [
-								{
-									"name": "Data flow1",
-									"type": "ExecuteDataFlow",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "1.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataflow": {
-											"referenceName": "df_adls_synapse_history",
-											"type": "DataFlowReference",
-											"parameters": {
-												"df_schema": {
-													"value": "'@{item().target_path}'",
-													"type": "Expression"
-												},
-												"df_table": {
-													"value": "'@{item().dest_table}'",
-													"type": "Expression"
-												},
-												"ds_folder": {
-													"value": "'@{item().source_path}'",
-													"type": "Expression"
-												},
-												"df_watermark_col": {
-													"value": "'@{item().watermark_col}'",
-													"type": "Expression"
-												}
-											},
-											"datasetParameters": {
-												"source1": {
-													"ds_folder": {
-														"value": "@item().source_path",
-														"type": "Expression"
-													},
-													"ds_filename": {
-														"value": "@concat(item().source_table,'.parquet')",
-														"type": "Expression"
-													},
-													"ds_container": {
-														"value": "@item().container",
-														"type": "Expression"
-													}
-												},
-												"sink1": {
-													"ds_schema": {
-														"value": "@item().target_path",
-														"type": "Expression"
-													},
-													"ds_table": {
-														"value": "@item().dest_table",
-														"type": "Expression"
-													}
-												}
-											}
-										},
-										"staging": {
-											"linkedService": {
-												"referenceName": "AzureDataLakeStorage1",
-												"type": "LinkedServiceReference"
-											},
-											"folderPath": {
-												"value": "@item().container",
-												"type": "Expression"
-											}
-										},
-										"compute": {
-											"coreCount": 48,
-											"computeType": "General"
-										},
-										"traceLevel": "Fine"
-									}
-								},
-								{
-									"name": "Stored procedure update run status true",
-									"type": "SqlServerStoredProcedure",
-									"dependsOn": [
-										{
-											"activity": "Data flow1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"storedProcedureName": {
-											"value": "@concat(pipeline().parameters.ctbl_schema,'.upd_run_status_true')",
-											"type": "Expression"
-										},
-										"storedProcedureParameters": {
-											"load_type": {
-												"value": "history",
-												"type": "String"
-											},
-											"t_sequence": {
-												"value": "2",
-												"type": "String"
-											},
-											"t_source_table": {
-												"value": {
-													"value": "@item().source_table",
-													"type": "Expression"
-												},
-												"type": "String"
-											}
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "AzureSynapseAnalytics1",
-										"type": "LinkedServiceReference"
-									}
-								},
-								{
-									"name": "Stored procedure update run status false",
-									"type": "SqlServerStoredProcedure",
-									"dependsOn": [
-										{
-											"activity": "Data flow1",
-											"dependencyConditions": [
-												"Failed"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"storedProcedureName": {
-											"value": "@concat(pipeline().parameters.ctbl_schema,'.upd_run_status_false')",
-											"type": "Expression"
-										},
-										"storedProcedureParameters": {
-											"load_type": {
-												"value": "history",
-												"type": "String"
-											},
-											"t_sequence": {
-												"value": "2",
-												"type": "String"
-											},
-											"t_source_table": {
-												"value": {
-													"value": "@item().source_table",
-													"type": "Expression"
-												},
-												"type": "String"
-											}
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "AzureSynapseAnalytics1",
-										"type": "LinkedServiceReference"
-									}
-								},
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "Stored procedure update run status true",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@empty(item().watermark_col)",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "Lookup max of watermark column",
-												"type": "Lookup",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"source": {
-														"type": "SqlDWSource",
-														"sqlReaderQuery": {
-															"value": "@concat('select max(',item().watermark_col,') wm_value from ',item().target_path,'.',item().dest_table)",
-															"type": "Expression"
-														},
-														"queryTimeout": "02:00:00",
-														"partitionOption": "None"
-													},
-													"dataset": {
-														"referenceName": "ds_synapse",
-														"type": "DatasetReference",
-														"parameters": {}
-													}
-												}
-											},
-											{
-												"name": "update watermark in history fs 2 record",
-												"type": "SqlServerStoredProcedure",
-												"dependsOn": [
-													{
-														"activity": "Lookup max of watermark column",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"storedProcedureName": {
-														"value": "@concat(pipeline().parameters.ctbl_schema,'.sp_update_wm_val')",
-														"type": "Expression"
-													},
-													"storedProcedureParameters": {
-														"flow_sequence": {
-															"value": "2",
-															"type": "Int32"
-														},
-														"last_updt_date": {
-															"value": {
-																"value": "@utcnow()",
-																"type": "Expression"
-															},
-															"type": "DateTime"
-														},
-														"load_type": {
-															"value": "history",
-															"type": "String"
-														},
-														"source_name": {
-															"value": {
-																"value": "@item().source_name",
-																"type": "Expression"
-															},
-															"type": "String"
-														},
-														"source_table": {
-															"value": {
-																"value": "@item().dest_table",
-																"type": "Expression"
-															},
-															"type": "String"
-														},
-														"watermarkval": {
-															"value": {
-																"value": "@activity('Lookup max of watermark column').output.firstRow.wm_value",
-																"type": "Expression"
-															},
-															"type": "String"
-														}
-													}
-												},
-												"linkedServiceName": {
-													"referenceName": "AzureSynapseAnalytics1",
-													"type": "LinkedServiceReference"
-												}
-											},
-											{
-												"name": "SP update watermark in current fs 1 record",
-												"type": "SqlServerStoredProcedure",
-												"dependsOn": [
-													{
-														"activity": "update watermark in history fs 2 record",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"storedProcedureName": {
-														"value": "@concat(pipeline().parameters.ctbl_schema,'.sp_update_wm_val')",
-														"type": "Expression"
-													},
-													"storedProcedureParameters": {
-														"flow_sequence": {
-															"value": "1",
-															"type": "Int32"
-														},
-														"last_updt_date": {
-															"value": {
-																"value": "@utcnow()",
-																"type": "Expression"
-															},
-															"type": "DateTime"
-														},
-														"load_type": {
-															"value": "current",
-															"type": "String"
-														},
-														"source_name": {
-															"value": {
-																"value": "@item().source_name",
-																"type": "Expression"
-															},
-															"type": "String"
-														},
-														"source_table": {
-															"value": {
-																"value": "@item().dest_table",
-																"type": "Expression"
-															},
-															"type": "String"
-														},
-														"watermarkval": {
-															"value": {
-																"value": "@activity('Lookup max of watermark column').output.firstRow.wm_value",
-																"type": "Expression"
-															},
-															"type": "String"
-														}
-													}
-												},
-												"linkedServiceName": {
-													"referenceName": "AzureSynapseAnalytics1",
-													"type": "LinkedServiceReference"
-												}
-											}
-										]
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"ctbl_schema": {
-						"type": "string"
-					},
-					"ctbl_name": {
-						"type": "string"
-					},
-					"trigger_segment": {
-						"type": "string"
-					},
-					"p_load_type": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Ingestion patterns Sql db to Synapse/History"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-03-11T03:50:35Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_synapse')]",
-				"[concat(variables('factoryId'), '/dataflows/df_adls_synapse_history')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_partition_sqldb_adls')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
+					],
+					"sinks": [
+						{
 							"dataset": {
-								"referenceName": "SqlServerTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"referenceName": "ds_synapse_anytable1",
+								"type": "DatasetReference"
 							},
-							"firstRowOnly": false
+							"name": "sink1"
 						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"batchCount": 6,
-							"activities": [
-								{
-									"name": "Copy data1",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "SqlServerSource",
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "ParquetWriteSettings"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "SqlServerTable1",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "ds_adls_parquet_any_file",
-											"type": "DatasetReference",
-											"parameters": {
-												"ds_folder": {
-													"value": "@pipeline().parameters.folder",
-													"type": "Expression"
-												},
-												"ds_filename": {
-													"value": "@concat(pipeline().parameters.filename,'_',item().his_grp_column,'.parquet')",
-													"type": "Expression"
-												},
-												"ds_container": {
-													"value": "@pipeline().parameters.container",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						},
+						{
+							"name": "DerivedColumn1"
 						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"schemaname": {
-						"type": "string"
-					},
-					"tablename": {
-						"type": "string"
-					},
-					"cntrl_table_his_grp_column": {
-						"type": "string",
-						"defaultValue": "CONCAT(EXTRACT(YEAR  FROM BLNG_DT), EXTRACT(MONTH FROM date))"
-					},
-					"cntrl_table_qstring": {
-						"type": "string",
-						"defaultValue": " select year(date) his_grp_column, COUNT(*) CNT from schema.tablename"
-					},
-					"folder": {
-						"type": "string",
-						"defaultValue": "tablename/raw/history"
-					},
-					"filename": {
-						"type": "string",
-						"defaultValue": "filename without extension"
-					},
-					"watermark_where_cond": {
-						"type": "string",
-						"defaultValue": "year(date) ='part_value'"
-					},
-					"container": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Ingestion patterns Sql db to Synapse/History"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-03-11T03:58:18Z"
+					],
+					"script": "parameters{\n\tcols as string[]\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~> source1\nDerivedColumn1 alterRow(upsertIf(true())) ~> AlterRow1\nsource1 derive(last_update_tmstp = currentUTC()) ~> DerivedColumn1\nAlterRow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tsource_table as string,\n\t\tdest_table as string,\n\t\tsource_path as string,\n\t\ttarget_path as string,\n\t\tflow_sequence as string,\n\t\trun_status as string,\n\t\tqstring as string,\n\t\twatermark_col as string,\n\t\twatermark_val as string,\n\t\tkey_column as string,\n\t\tsource_name as string,\n\t\tload_type as string,\n\t\tstart_run as string,\n\t\tsource_id as string\n\t),\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:($cols),\n\tformat: 'table',\n\tstaged: true,\n\tallowCopyCommand: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
-				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_sqldb_adls_all_tables_history_seq1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "SqlServerTable1",
-								"type": "DatasetReference",
-								"parameters": {
-									"ds_schema": {
-										"value": "@pipeline().parameters.ctbl_schema",
-										"type": "Expression"
-									},
-									"ds_tablename": {
-										"value": "@pipeline().parameters.ctbl_name",
-										"type": "Expression"
-									}
-								}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"batchCount": 10,
-							"activities": [
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@not(equals(item().partition_flag,'Y'))",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "Execute Pipeline1",
-												"type": "ExecutePipeline",
-												"dependsOn": [],
-												"policy": {
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"pipeline": {
-														"referenceName": "pl_partition_sqldb_adls",
-														"type": "PipelineReference"
-													},
-													"waitOnCompletion": true,
-													"parameters": {
-														"schemaname": {
-															"value": "@toUpper(item().source_path)",
-															"type": "Expression"
-														},
-														"tablename": {
-															"value": "@toUpper(item().source_table)",
-															"type": "Expression"
-														},
-														"cntrl_table_his_grp_column": {
-															"value": "@item().his_grp_column",
-															"type": "Expression"
-														},
-														"cntrl_table_qstring": {
-															"value": "@item().qstring",
-															"type": "Expression"
-														},
-														"folder": {
-															"value": "@item().target_path",
-															"type": "Expression"
-														},
-														"filename": {
-															"value": "@item().dest_table",
-															"type": "Expression"
-														},
-														"watermark_where_cond": {
-															"value": "@item().watermark_where_cond",
-															"type": "Expression"
-														},
-														"container": {
-															"value": "@item().container",
-															"type": "Expression"
-														}
-													}
-												}
-											},
-											{
-												"name": "Stored procedure update run status true_copy1",
-												"type": "SqlServerStoredProcedure",
-												"dependsOn": [
-													{
-														"activity": "Execute Pipeline1",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"storedProcedureName": {
-														"value": "@concat(pipeline().parameters.ctbl_schema,'.upd_run_status_true')",
-														"type": "Expression"
-													},
-													"storedProcedureParameters": {
-														"load_type": {
-															"value": "history",
-															"type": "String"
-														},
-														"t_sequence": {
-															"value": "1",
-															"type": "String"
-														},
-														"t_source_table": {
-															"value": {
-																"value": "@item().source_table",
-																"type": "Expression"
-															},
-															"type": "String"
-														}
-													}
-												},
-												"linkedServiceName": {
-													"referenceName": "AzureSynapseAnalytics1",
-													"type": "LinkedServiceReference"
-												}
-											},
-											{
-												"name": "Stored procedure update run status true_copy1_copy1",
-												"type": "SqlServerStoredProcedure",
-												"dependsOn": [
-													{
-														"activity": "Execute Pipeline1",
-														"dependencyConditions": [
-															"Failed"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"storedProcedureName": {
-														"value": "@concat(pipeline().parameters.ctbl_schema,'.upd_run_status_false')",
-														"type": "Expression"
-													},
-													"storedProcedureParameters": {
-														"load_type": {
-															"value": "history",
-															"type": "String"
-														},
-														"t_sequence": {
-															"value": "1",
-															"type": "String"
-														},
-														"t_source_table": {
-															"value": {
-																"value": "@item().source_table",
-																"type": "Expression"
-															},
-															"type": "String"
-														}
-													}
-												},
-												"linkedServiceName": {
-													"referenceName": "AzureSynapseAnalytics1",
-													"type": "LinkedServiceReference"
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "Copy data1",
-												"type": "Copy",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"source": {
-														"type": "SqlServerSource",
-														"queryTimeout": "02:00:00",
-														"partitionOption": "None"
-													},
-													"sink": {
-														"type": "ParquetSink",
-														"storeSettings": {
-															"type": "AzureBlobFSWriteSettings"
-														},
-														"formatSettings": {
-															"type": "ParquetWriteSettings"
-														}
-													},
-													"enableStaging": false,
-													"translator": {
-														"type": "TabularTranslator",
-														"typeConversion": true,
-														"typeConversionSettings": {
-															"allowDataTruncation": true,
-															"treatBooleanAsNumber": false
-														}
-													}
-												},
-												"inputs": [
-													{
-														"referenceName": "SqlServerTable1",
-														"type": "DatasetReference",
-														"parameters": {
-															"ds_schema": "@item().source_path",
-															"ds_tablename": "@item().source_table"
-														}
-													}
-												],
-												"outputs": [
-													{
-														"referenceName": "ds_adls_parquet_any_file",
-														"type": "DatasetReference",
-														"parameters": {
-															"ds_folder": {
-																"value": "@item().target_path",
-																"type": "Expression"
-															},
-															"ds_filename": {
-																"value": "@concat(item().dest_table,'.parquet')",
-																"type": "Expression"
-															},
-															"ds_container": {
-																"value": "@item().container",
-																"type": "Expression"
-															}
-														}
-													}
-												]
-											},
-											{
-												"name": "Stored procedure update run status true",
-												"type": "SqlServerStoredProcedure",
-												"dependsOn": [
-													{
-														"activity": "Copy data1",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"storedProcedureName": {
-														"value": "@concat(pipeline().parameters.ctbl_schema,'.upd_run_status_true')",
-														"type": "Expression"
-													},
-													"storedProcedureParameters": {
-														"load_type": {
-															"value": "history",
-															"type": "String"
-														},
-														"t_sequence": {
-															"value": "1",
-															"type": "String"
-														},
-														"t_source_table": {
-															"value": {
-																"value": "@item().source_table",
-																"type": "Expression"
-															},
-															"type": "String"
-														}
-													}
-												},
-												"linkedServiceName": {
-													"referenceName": "SqlServeronprem",
-													"type": "LinkedServiceReference"
-												}
-											},
-											{
-												"name": "Stored procedure update run status false",
-												"type": "SqlServerStoredProcedure",
-												"dependsOn": [
-													{
-														"activity": "Copy data1",
-														"dependencyConditions": [
-															"Failed"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"storedProcedureName": {
-														"value": "@concat(pipeline().parameters.ctbl_schema,'.upd_run_status_false')",
-														"type": "Expression"
-													},
-													"storedProcedureParameters": {
-														"load_type": {
-															"value": "history",
-															"type": "String"
-														},
-														"t_sequence": {
-															"value": "1",
-															"type": "String"
-														},
-														"t_source_table": {
-															"value": {
-																"value": "@item().source_table",
-																"type": "Expression"
-															},
-															"type": "String"
-														}
-													}
-												},
-												"linkedServiceName": {
-													"referenceName": "SqlServeronprem",
-													"type": "LinkedServiceReference"
-												}
-											}
-										]
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"ctbl_schema": {
-						"type": "string"
-					},
-					"ctbl_name": {
-						"type": "string"
-					},
-					"trigger_segment": {
-						"type": "string"
-					},
-					"p_load_type": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Ingestion patterns Sql db to Synapse/History"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-03-11T03:59:49Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
-				"[concat(variables('factoryId'), '/pipelines/pl_partition_sqldb_adls')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]",
-				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file')]",
-				"[concat(variables('factoryId'), '/linkedServices/SqlServeronprem')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_end_to_end_history_sqldb_synapse')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Execute sql db to ADLS",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pl_sqldb_adls_all_tables_history_seq1",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"ctbl_schema": {
-									"value": "@pipeline().parameters.ctbl_schema",
-									"type": "Expression"
-								},
-								"ctbl_name": {
-									"value": "@pipeline().parameters.ctbl_name",
-									"type": "Expression"
-								},
-								"trigger_segment": {
-									"value": "@pipeline().parameters.trigger_segment",
-									"type": "Expression"
-								},
-								"p_load_type": {
-									"value": "@pipeline().parameters.p_load_type",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "Execute ADLS to Synapse",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Execute sql db to ADLS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pl_adls_synapse_all_tables_history_seq2",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"ctbl_schema": {
-									"value": "@pipeline().parameters.ctbl_schema",
-									"type": "Expression"
-								},
-								"ctbl_name": {
-									"value": "@pipeline().parameters.ctbl_name",
-									"type": "Expression"
-								},
-								"trigger_segment": {
-									"value": "@pipeline().parameters.trigger_segment",
-									"type": "Expression"
-								},
-								"p_load_type": {
-									"value": "@pipeline().parameters.p_load_type",
-									"type": "Expression"
-								}
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"ctbl_schema": {
-						"type": "string"
-					},
-					"ctbl_name": {
-						"type": "string"
-					},
-					"trigger_segment": {
-						"type": "string"
-					},
-					"p_load_type": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Ingestion patterns Sql db to Synapse/History"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-03-11T02:04:07Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pl_sqldb_adls_all_tables_history_seq1')]",
-				"[concat(variables('factoryId'), '/pipelines/pl_adls_synapse_all_tables_history_seq2')]"
+				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file131')]",
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_anytable1')]"
 			]
 		}
 	]
