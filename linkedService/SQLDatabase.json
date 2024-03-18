@@ -3,7 +3,7 @@
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
-		"type": "AzureSqlDatabase",
+		"type": "SqlServer",
 		"typeProperties": {
 			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=dmtcsql.eastus2.cloudapp.azure.com;initial catalog=AdventureWorks2022;user id=adminsrram",
 			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4ODc3ZjE2My01YTRlLTQ3NGMtYWYxOC00ZDIzMGY2MDIzYWYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
