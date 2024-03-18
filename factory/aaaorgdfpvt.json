@@ -1,0 +1,19 @@
+{
+	"name": "aaaorgdfpvt",
+	"properties": {
+		"globalConfigurations": {
+			"mountedConfiguration": [
+				{
+					"workspaceId": "d8742329-cf83-4413-a5b3-5a6d5ce65cee",
+					"artifactId": "1d06954b-23b8-49b8-9223-cb4742f681d4"
+				}
+			]
+		}
+	},
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "826a79f6-89a7-4120-85d2-01f651182da8",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}
