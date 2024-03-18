@@ -19,17 +19,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'PostgreSql1'"
 		},
-		"sqlserversecured_connectionString": {
+		"SQLDatabase_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'sqlserversecured'"
+			"metadata": "Secure string for 'connectionString' of 'SQLDatabase'"
 		},
 		"SqlServeronprem_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServeronprem'"
 		},
-		"SQLDatabase_connectionString": {
+		"sqlserversecured_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SQLDatabase'"
+			"metadata": "Secure string for 'connectionString' of 'sqlserversecured'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -83,14 +83,14 @@
 					"PostgreSql1_password": {
 						"value": "[parameters('PostgreSql1_password')]"
 					},
-					"sqlserversecured_connectionString": {
-						"value": "[parameters('sqlserversecured_connectionString')]"
+					"SQLDatabase_connectionString": {
+						"value": "[parameters('SQLDatabase_connectionString')]"
 					},
 					"SqlServeronprem_connectionString": {
 						"value": "[parameters('SqlServeronprem_connectionString')]"
 					},
-					"SQLDatabase_connectionString": {
-						"value": "[parameters('SQLDatabase_connectionString')]"
+					"sqlserversecured_connectionString": {
+						"value": "[parameters('sqlserversecured_connectionString')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"

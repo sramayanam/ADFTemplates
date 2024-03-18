@@ -19,17 +19,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'PostgreSql1'"
 		},
-		"sqlserversecured_connectionString": {
+		"SQLDatabase_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'sqlserversecured'"
+			"metadata": "Secure string for 'connectionString' of 'SQLDatabase'"
 		},
 		"SqlServeronprem_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServeronprem'"
 		},
-		"SQLDatabase_connectionString": {
+		"sqlserversecured_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SQLDatabase'"
+			"metadata": "Secure string for 'connectionString' of 'sqlserversecured'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -395,14 +395,14 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sqlserversecured')]",
+			"name": "[concat(parameters('factoryName'), '/SQLDatabase')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "SqlServer",
 				"typeProperties": {
-					"connectionString": "[parameters('sqlserversecured_connectionString')]"
+					"connectionString": "[parameters('SQLDatabase_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "vnetshir",
@@ -433,14 +433,14 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SQLDatabase')]",
+			"name": "[concat(parameters('factoryName'), '/sqlserversecured')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "SqlServer",
 				"typeProperties": {
-					"connectionString": "[parameters('SQLDatabase_connectionString')]"
+					"connectionString": "[parameters('sqlserversecured_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "vnetshir",
@@ -449,6 +449,46 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/vnetshir')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServeronprem",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_schema": {
+						"type": "string",
+						"defaultValue": "Production"
+					},
+					"ds_tablename": {
+						"type": "string",
+						"defaultValue": "Product"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().ds_schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().ds_tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SqlServeronprem')]"
 			]
 		},
 		{
@@ -490,40 +530,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file12')]",
 				"[concat(variables('factoryId'), '/datasets/ds_synapse_anytable')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SqlServeronprem",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"ds_schema": {
-						"type": "string",
-						"defaultValue": "Production"
-					},
-					"ds_tablename": {
-						"type": "string",
-						"defaultValue": "Product"
-					}
-				},
-				"folder": {
-					"name": "ingestion pattern datasets"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "@dataset().ds_schema",
-					"table": "@dataset().ds_tablename"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SqlServeronprem')]"
 			]
 		},
 		{
@@ -1166,7 +1172,16 @@
 							"dataset": {
 								"referenceName": "SqlServerTable1",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"ds_schema": {
+										"value": "@pipeline().parameters.ctbl_schema",
+										"type": "Expression"
+									},
+									"ds_tablename": {
+										"value": "@pipeline().parameters.ctbl_name",
+										"type": "Expression"
+									}
+								}
 							},
 							"firstRowOnly": false
 						}
@@ -1389,7 +1404,10 @@
 													{
 														"referenceName": "SqlServerTable1",
 														"type": "DatasetReference",
-														"parameters": {}
+														"parameters": {
+															"ds_schema": "@item().source_path",
+															"ds_tablename": "@item().source_table"
+														}
 													}
 												],
 												"outputs": [
