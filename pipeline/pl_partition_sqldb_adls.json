@@ -16,21 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "@pipeline().parameters.cntrl_table_qstring",
-							"type": "Expression"
-						},
+						"type": "SqlServerSource",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "ds_sql_db_any_table",
-						"type": "DatasetReference",
-						"parameters": {
-							"ds_schema": "schema",
-							"ds_tablename": "table"
-						}
+						"referenceName": "SqlServerTable1",
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -86,26 +78,8 @@
 										"type": "ParquetWriteSettings"
 									}
 								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
+								"enableStaging": false
 							},
-							"inputs": [
-								{
-									"referenceName": "ds_sql_db_any_table",
-									"type": "DatasetReference",
-									"parameters": {
-										"ds_schema": "schemaname",
-										"ds_tablename": "table"
-									}
-								}
-							],
 							"outputs": [
 								{
 									"referenceName": "ds_adls_parquet_any_file",
