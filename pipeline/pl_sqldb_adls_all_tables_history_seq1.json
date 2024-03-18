@@ -22,7 +22,17 @@
 					},
 					"dataset": {
 						"referenceName": "SqlServerTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_schema": {
+								"value": "@pipeline().parameters.ctbl_schema",
+								"type": "Expression"
+							},
+							"ds_tablename": {
+								"value": "@pipeline().parameters.ctbl_name",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
