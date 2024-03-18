@@ -2166,18 +2166,17 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": {
-									"value": "@concat('select * from ',pipeline().parameters.ctbl_schema,'.',pipeline().parameters.ctbl_name, ' where trigger_segment=', pipeline().parameters.p_trigger_schedule,' start_run=''Y'' and load_type =''current'' and flow_sequence=1 and run_status =''N''')",
-									"type": "Expression"
-								},
+								"type": "SqlServerSource",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
 							"dataset": {
-								"referenceName": "ds_synapse1",
+								"referenceName": "SqlServerTable1",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"ds_schema": "Production",
+									"ds_tablename": "Product"
+								}
 							},
 							"firstRowOnly": false
 						}
@@ -2698,7 +2697,6 @@
 				"lastPublishTime": "2022-03-11T04:04:57Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_synapse1')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
 				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file13')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
