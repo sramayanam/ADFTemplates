@@ -16,17 +16,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlDWSource",
-						"sqlReaderQuery": {
-							"value": "@concat('select * from ',pipeline().parameters.ctbl_schema,'.adls_log_hist where tablename = ''',pipeline().parameters.p_source_table, ''' and processed = ''N'' order by last_modified_date ')",
-							"type": "Expression"
-						},
+						"type": "SqlServerSource",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "ds_synapse1",
-						"type": "DatasetReference"
+						"referenceName": "SqlServerTable1",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_schema": "Production",
+							"ds_tablename": "Product"
+						}
 					},
 					"firstRowOnly": false
 				}
