@@ -1474,7 +1474,7 @@
 													}
 												},
 												"linkedServiceName": {
-													"referenceName": "AzureSynapseAnalytics1",
+													"referenceName": "SqlServeronprem",
 													"type": "LinkedServiceReference"
 												}
 											},
@@ -1521,7 +1521,7 @@
 													}
 												},
 												"linkedServiceName": {
-													"referenceName": "AzureSynapseAnalytics1",
+													"referenceName": "SqlServeronprem",
 													"type": "LinkedServiceReference"
 												}
 											}
@@ -1559,7 +1559,8 @@
 				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_partition_sqldb_adls')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]",
-				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file')]"
+				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file')]",
+				"[concat(variables('factoryId'), '/linkedServices/SqlServeronprem')]"
 			]
 		},
 		{
