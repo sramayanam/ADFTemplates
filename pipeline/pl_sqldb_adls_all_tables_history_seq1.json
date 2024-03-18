@@ -372,7 +372,7 @@
 											}
 										},
 										"linkedServiceName": {
-											"referenceName": "AzureSynapseAnalytics1",
+											"referenceName": "SqlServeronprem",
 											"type": "LinkedServiceReference"
 										}
 									}
