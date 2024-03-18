@@ -218,7 +218,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"source": {
-												"type": "AzureSqlSource",
+												"type": "SqlServerSource",
 												"queryTimeout": "02:00:00",
 												"partitionOption": "None"
 											},
@@ -231,8 +231,22 @@
 													"type": "ParquetWriteSettings"
 												}
 											},
-											"enableStaging": false
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
 										},
+										"inputs": [
+											{
+												"referenceName": "SqlServerTable1",
+												"type": "DatasetReference"
+											}
+										],
 										"outputs": [
 											{
 												"referenceName": "ds_adls_parquet_any_file",
