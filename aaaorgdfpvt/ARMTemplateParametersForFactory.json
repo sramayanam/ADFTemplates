@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "aaaorgdfpvt"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureSynapseAnalytics1_connectionString": {
+			"value": ""
+		},
+		"PostgreSql1_password": {
+			"value": ""
+		},
+		"SQLDatabase_connectionString": {
+			"value": ""
+		},
+		"sqlserversecured_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://dmtcstoragesecured.dfs.core.windows.net/"
+		},
+		"PostgreSql1_properties_typeProperties_server": {
+			"value": "10.0.0.5"
+		},
+		"PostgreSql1_properties_typeProperties_database": {
+			"value": "demo"
+		},
+		"PostgreSql1_properties_typeProperties_username": {
+			"value": "postgres"
+		}
+	}
+}
