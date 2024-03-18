@@ -6,11 +6,7 @@
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
 			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=dmtcsql.eastus2.cloudapp.azure.com;initial catalog=AdventureWorks2022;user id=adminsrram",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyYmE1NTUwOC1jMjU3LTQ2ZjktOTZhOC0xNjAwZmZiMzcyZTUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
-		},
-		"connectVia": {
-			"referenceName": "vnetshir",
-			"type": "IntegrationRuntimeReference"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDRFODIxRDU3LUFDNTMtNEU2Qy05QzgwLUE0MDFFNTgwNUZFQ18wNDcxZTdlNS0wNWRhLTRhZDgtYjZjYS05NDMwN2Y3YjJmYzciDQp9"
 		}
 	}
 }
