@@ -1,0 +1,7 @@
+{
+	"name": "AzureDataLakeStorageSecured",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/fc0ba10d-1810-4599-a776-0f13abc38f28/resourceGroups/rg-analytics/providers/Microsoft.Storage/storageAccounts/dmtcstoragesecured",
+		"groupId": "dfs"
+	}
+}
