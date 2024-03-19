@@ -1,0 +1,7 @@
+{
+	"name": "Purview104_queue",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/ae73da88-2bad-4a45-8627-0a137149dd32/resourceGroups/ingestion-storage-rg-eastus2-9/providers/Microsoft.Storage/storageAccounts/ingestioneus2wermhkf",
+		"groupId": "queue"
+	}
+}
