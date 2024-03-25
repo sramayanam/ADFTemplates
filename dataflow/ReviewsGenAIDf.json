@@ -12,7 +12,15 @@
 					"name": "ReadCsvFile"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dbcontainer",
+						"type": "DatasetReference"
+					},
+					"name": "writetoCosmos"
+				}
+			],
 			"transformations": [
 				{
 					"name": "queryapi",
@@ -86,7 +94,22 @@
 				"          Sentiment = body.Sentiment",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> finalfields"
+				"     skipDuplicateMapOutputs: true) ~> finalfields",
+				"finalfields sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          log as string,",
+				"          response as string,",
+				"          promptTokens as integer,",
+				"          responseTokens as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'document',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> writetoCosmos"
 			]
 		}
 	}
