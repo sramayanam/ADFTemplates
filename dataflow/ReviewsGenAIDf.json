@@ -104,7 +104,7 @@
 				"createsurrogateKey sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'document',",
-				"     container: 'logs',",
+				"     container: 'sentimentbycategory',",
 				"     deletable: false,",
 				"     insertable: true,",
 				"     updateable: false,",
