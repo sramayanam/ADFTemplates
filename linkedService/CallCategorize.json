@@ -1,5 +1,6 @@
 {
 	"name": "CallCategorize",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"parameters": {
 			"prompt": {
@@ -11,8 +12,13 @@
 		"typeProperties": {
 			"url": "https://intelligent-query-service.azure-api.net/categorize/classify",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous"
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"Ocp-Apim-Subscription-Key": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
