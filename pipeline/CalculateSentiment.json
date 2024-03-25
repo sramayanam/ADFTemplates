@@ -1,0 +1,9 @@
+{
+	"name": "CalculateSentiment",
+	"properties": {
+		"folder": {
+			"name": "Orchestrator"
+		},
+		"annotations": []
+	}
+}
