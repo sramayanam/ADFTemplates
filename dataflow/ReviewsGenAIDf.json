@@ -109,6 +109,7 @@
 				"     insertable: true,",
 				"     updateable: false,",
 				"     upsertable: true,",
+				"     partitionKey: ['/id'],",
 				"     store: 'cosmosDB',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> writetoCosmos"
