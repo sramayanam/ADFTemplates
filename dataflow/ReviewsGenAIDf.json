@@ -23,6 +23,9 @@
 				},
 				{
 					"name": "ParseFields"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -54,11 +57,22 @@
 				"     addResponseCode: true,",
 				"     requestFormat: ['type' -> 'json'],",
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> queryapi",
-				"queryapi parse(body = body.content ? (Category as string,",
+				"select1 parse(body = body.content ? (Category as string,",
 				"          SubCategory as string,",
 				"          Sentiment as string),",
 				"     format: 'json',",
-				"     documentForm: 'arrayOfDocuments') ~> ParseFields"
+				"     documentForm: 'arrayOfDocuments') ~> ParseFields",
+				"queryapi select(mapColumn(",
+				"          prompt,",
+				"          body,",
+				"          headers,",
+				"          status,",
+				"          completion_tokens = body.completion_tokens,",
+				"          prompt_tokens = body.prompt_tokens,",
+				"          total_tokens = body.total_tokens",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
