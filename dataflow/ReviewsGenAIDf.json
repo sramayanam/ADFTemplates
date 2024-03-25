@@ -1,5 +1,5 @@
 {
-	"name": "dataflow2",
+	"name": "ReviewsGenAIDf",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -57,6 +57,9 @@
 				"queryapi parse(body = body.content ? (Category as string,",
 				"          SubCategory as string,",
 				"          Sentiment as string),",
+				"          completiontokens = body.completion_tokens,",
+				"          prompttokens = body.prompt_tokens,",
+				"          totaltokens = body.total_tokens,",
 				"     format: 'json',",
 				"     documentForm: 'arrayOfDocuments') ~> ParseFields"
 			]
