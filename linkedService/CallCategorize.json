@@ -4,7 +4,7 @@
 		"parameters": {
 			"prompt": {
 				"type": "string",
-				"defaultValue": "At 60 km/hr my car is providing me so much trouble, the steering wheel is shaky"
+				"defaultValue": "At%2060%20km/hr%20my%20car%20is%20providing%20me%20so%20much%20trouble,%20the%20steering%20wheel%20is%20shaky"
 			}
 		},
 		"annotations": [],
