@@ -15,17 +15,11 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "externalCall1",
+					"name": "queryapi",
 					"linkedService": {
 						"referenceName": "CallCategorize",
 						"type": "LinkedServiceReference"
 					}
-				},
-				{
-					"name": "select1"
-				},
-				{
-					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -42,7 +36,6 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     output(",
 				"          headers as [string,string],",
-				"          body as (content as [string,string], completion_tokens as string, prompt_tokens as string, total_tokens as string),",
 				"          status as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
@@ -56,17 +49,7 @@
 				"     statusColumnName: 'status',",
 				"     addResponseCode: true,",
 				"     requestFormat: ['type' -> 'json'],",
-				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> externalCall1",
-				"externalCall1 select(mapColumn(",
-				"          prompt,",
-				"          content = body.content,",
-				"          completion_tokens = body.completion_tokens,",
-				"          prompt_tokens = body.prompt_tokens,",
-				"          total_tokens = body.total_tokens",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 derive(content = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> queryapi"
 			]
 		}
 	}
