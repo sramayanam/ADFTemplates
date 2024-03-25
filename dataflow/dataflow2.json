@@ -22,7 +22,7 @@
 					}
 				},
 				{
-					"name": "parse1"
+					"name": "ParseFields"
 				}
 			],
 			"scriptLines": [
@@ -58,7 +58,7 @@
 				"          SubCategory as string,",
 				"          Sentiment as string),",
 				"     format: 'json',",
-				"     documentForm: 'arrayOfDocuments') ~> parse1"
+				"     documentForm: 'arrayOfDocuments') ~> ParseFields"
 			]
 		}
 	}
