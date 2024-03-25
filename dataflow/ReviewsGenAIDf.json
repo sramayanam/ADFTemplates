@@ -57,9 +57,7 @@
 				"queryapi parse(body = body.content ? (Category as string,",
 				"          SubCategory as string,",
 				"          Sentiment as string),",
-				"          completiontokens = body.completion_tokens ? string,",
-				"          prompttokens = body.prompt_tokens ? string,",
-				"          totaltokens = body.total_tokens ? string,",
+				"          completion_tokens = body.completion_tokens ? string,",
 				"     format: 'json',",
 				"     documentForm: 'arrayOfDocuments') ~> ParseFields"
 			]
