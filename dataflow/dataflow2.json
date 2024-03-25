@@ -60,7 +60,7 @@
 				"          body = body,",
 				"          headers,",
 				"          status,",
-				"          content = {body.content.Category},",
+				"          content = {body.content},",
 				"          completion_tokens = body.completion_tokens,",
 				"          prompt_tokens = body.prompt_tokens,",
 				"          total_tokens = body.total_tokens",
