@@ -20,6 +20,9 @@
 						"referenceName": "CallCategorize",
 						"type": "LinkedServiceReference"
 					}
+				},
+				{
+					"name": "parse1"
 				}
 			],
 			"scriptLines": [
@@ -36,7 +39,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     output(",
 				"          headers as [string,string],",
-				"          body as (content as string, Category as string),",
+				"          body as (completion_tokens as string, content as string, prompt_tokens as string, total_tokens as string),",
 				"          status as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
@@ -50,7 +53,15 @@
 				"     statusColumnName: 'status',",
 				"     addResponseCode: true,",
 				"     requestFormat: ['type' -> 'json'],",
-				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> queryapi"
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> queryapi",
+				"queryapi parse(body = body.content ? (Category as string,",
+				"          SubCategory as string,",
+				"          Sentiment as string),",
+				"          completion_tokens = body.completion_tokens,",
+				"          prompt_tokens = body.prompt_tokens,",
+				"          total_tokens = body.total_tokens,",
+				"     format: 'json',",
+				"     documentForm: 'arrayOfDocuments') ~> parse1"
 			]
 		}
 	}
