@@ -1,24 +1,13 @@
 {
 	"name": "CallCategorize",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"parameters": {
-			"prompt": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
 			"url": "https://intelligent-query-service.azure-api.net/categorize/classify",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous",
-			"authHeaders": {
-				"Ocp-Apim-Subscription-Key": {
-					"type": "SecureString",
-					"value": "**********"
-				}
-			}
+			"authenticationType": "Anonymous"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
