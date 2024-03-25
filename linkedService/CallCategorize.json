@@ -1,11 +1,6 @@
 {
 	"name": "CallCategorize",
 	"properties": {
-		"parameters": {
-			"prompt": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
