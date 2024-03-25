@@ -25,7 +25,7 @@
 					"name": "ParseFields"
 				},
 				{
-					"name": "select1"
+					"name": "selectfields"
 				},
 				{
 					"name": "select2"
@@ -60,7 +60,7 @@
 				"     addResponseCode: true,",
 				"     requestFormat: ['type' -> 'json'],",
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> queryapi",
-				"select1 parse(body = body.content ? (Category as string,",
+				"selectfields parse(body = body.content ? (Category as string,",
 				"          SubCategory as string,",
 				"          Sentiment as string),",
 				"     format: 'json',",
@@ -75,7 +75,7 @@
 				"          total_tokens = body.total_tokens",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> selectfields",
 				"ParseFields select(mapColumn(",
 				"          Prompt = prompt,",
 				"          CompletionTokens = completion_tokens,",
