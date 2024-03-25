@@ -1,12 +1,6 @@
 {
 	"name": "CallCategorize",
 	"properties": {
-		"parameters": {
-			"prompt": {
-				"type": "string",
-				"defaultValue": "At 60 km/hr my car is providing me so much trouble, the steering wheel is shaky"
-			}
-		},
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
