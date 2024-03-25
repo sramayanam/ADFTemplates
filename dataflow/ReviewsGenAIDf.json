@@ -37,6 +37,9 @@
 				},
 				{
 					"name": "finalfields"
+				},
+				{
+					"name": "createsurrogateKey"
 				}
 			],
 			"scriptLines": [
@@ -95,7 +98,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> finalfields",
-				"finalfields sink(allowSchemaDrift: true,",
+				"finalfields keyGenerate(output(id as long),",
+				"     startAt: 1002L,",
+				"     stepValue: 1L) ~> createsurrogateKey",
+				"createsurrogateKey sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'document',",
 				"     container: 'logs',",
