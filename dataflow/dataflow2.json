@@ -1,0 +1,57 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "reviews",
+						"type": "DatasetReference"
+					},
+					"name": "Reviews"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "CallLLM",
+					"linkedService": {
+						"referenceName": "CallCategorize",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {The latest sedan model I drove was a testament to the manufacturer's attention to detail and commitment to luxury. The interior craftsmanship was outstanding, with high-quality materials used throughout, and the seats were comfortable even on long drives. The fuel efficiency was impressive for a car of its size, but its performance did not disappoint either. The infotainment system was a bit complex, but manageable after some practice. Overall, a fantastic vehicle for those who appreciate both comfort and performance.  } as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Reviews",
+				"Reviews call(mapColumn(",
+				"          {  reviewparam} = {The latest sedan model I drove was a testament to the manufacturer's attention to detail and commitment to luxury. The interior craftsmanship was outstanding, with high-quality materials used throughout, and the seats were comfortable even on long drives. The fuel efficiency was impressive for a car of its size, but its performance did not disappoint either. The infotainment system was a bit complex, but manageable after some practice. Overall, a fantastic vehicle for those who appreciate both comfort and performance.  }",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     output(",
+				"          headers as [string,string],",
+				"          status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     format: 'rest',",
+				"     store: 'restservice',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     queryParameters = [prompt -> reviewparam],",
+				"     httpMethod: 'POST',",
+				"     headerColumnName: 'headers',",
+				"     bodyColumnName: 'body',",
+				"     statusColumnName: 'status',",
+				"     addResponseCode: true,",
+				"     requestFormat: ['type' -> 'json'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> CallLLM"
+			]
+		}
+	}
+}
