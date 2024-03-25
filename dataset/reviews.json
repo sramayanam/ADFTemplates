@@ -1,0 +1,28 @@
+{
+	"name": "reviews",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Reviews.csv",
+				"fileSystem": "reviews"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "The latest sedan model I drove was a testament to the manufacturer's attention to detail and commitment to luxury. The interior craftsmanship was outstanding, with high-quality materials used throughout, and the seats were comfortable even on long drives. The fuel efficiency was impressive for a car of its size, but its performance did not disappoint either. The infotainment system was a bit complex, but manageable after some practice. Overall, a fantastic vehicle for those who appreciate both comfort and performance.  ",
+				"type": "String"
+			}
+		]
+	}
+}
