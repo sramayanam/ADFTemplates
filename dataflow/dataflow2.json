@@ -23,9 +23,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     parameter as string",
-				"}",
 				"source(output(",
 				"          prompt as string",
 				"     ),",
@@ -33,7 +30,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> Reviews",
 				"Reviews call(mapColumn(",
-				"          parameter = prompt",
+				"          prompt",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -46,13 +43,12 @@
 				"     store: 'restservice',",
 				"     timeout: 30,",
 				"     requestInterval: 0,",
-				"     queryParameters = [prompt -> ERROR_FUNCTION('')],",
+				"     queryParameters = [prompt -> prompt],",
 				"     httpMethod: 'POST',",
 				"     headerColumnName: 'headers',",
 				"     bodyColumnName: 'body',",
 				"     statusColumnName: 'status',",
 				"     addResponseCode: true,",
-				"     requestFormat: ['type' -> 'json'],",
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> CallLLM"
 			]
 		}
