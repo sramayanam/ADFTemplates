@@ -60,7 +60,6 @@
 				"select1 parse(body = body.content ? (Category as string,",
 				"          SubCategory as string,",
 				"          Sentiment as string),",
-				"          completiontokens = toString(body.completion_tokens) ? string,",
 				"     format: 'json',",
 				"     documentForm: 'arrayOfDocuments') ~> ParseFields",
 				"queryapi select(mapColumn(",
