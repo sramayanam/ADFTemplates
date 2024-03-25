@@ -28,7 +28,7 @@
 					"name": "selectfields"
 				},
 				{
-					"name": "select2"
+					"name": "finalfields"
 				}
 			],
 			"scriptLines": [
@@ -86,7 +86,7 @@
 				"          Sentiment = body.Sentiment",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2"
+				"     skipDuplicateMapOutputs: true) ~> finalfields"
 			]
 		}
 	}
