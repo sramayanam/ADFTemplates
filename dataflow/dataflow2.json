@@ -20,6 +20,9 @@
 						"referenceName": "CallCategorize",
 						"type": "LinkedServiceReference"
 					}
+				},
+				{
+					"name": "flatten1"
 				}
 			],
 			"scriptLines": [
@@ -50,7 +53,16 @@
 				"     statusColumnName: 'status',",
 				"     addResponseCode: true,",
 				"     requestFormat: ['type' -> 'json'],",
-				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> externalCall1"
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> externalCall1",
+				"externalCall1 foldDown(unroll(),",
+				"     mapColumn(",
+				"          prompt,",
+				"          content = {body.content},",
+				"          headers,",
+				"          status",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1"
 			]
 		}
 	}
