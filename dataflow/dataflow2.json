@@ -36,7 +36,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     output(",
 				"          headers as [string,string],",
-				"          body as (prompt as string),",
+				"          body as (content as string),",
 				"          status as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
