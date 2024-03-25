@@ -26,6 +26,9 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -72,7 +75,18 @@
 				"          total_tokens = body.total_tokens",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"ParseFields select(mapColumn(",
+				"          prompt,",
+				"          body,",
+				"          headers,",
+				"          status,",
+				"          completion_tokens,",
+				"          prompt_tokens,",
+				"          total_tokens",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2"
 			]
 		}
 	}
