@@ -12,8 +12,20 @@
 					"name": "csvinput"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "CleanData"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CreateCleanData"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          {Month } as string,",
@@ -23,7 +35,24 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> csvinput"
+				"     ignoreNoFilesFound: false) ~> csvinput",
+				"csvinput derive({Month } = toDate({Month },'MM/dd/yyyy'),",
+				"          Value = toLong(Value,'#,###,###,###,###')) ~> CreateCleanData",
+				"CreateCleanData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['output.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     dateFormat:'yyyy/MM/dd',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          DateTime = {Month },",
+				"          Metric = {Metric },",
+				"          Type,",
+				"          Value",
+				"     )) ~> CleanData"
 			]
 		}
 	}
