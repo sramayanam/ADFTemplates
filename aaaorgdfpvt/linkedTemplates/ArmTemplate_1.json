@@ -497,7 +497,8 @@
 						"          DateTime = {Month },",
 						"          Metric = {Metric },",
 						"          Type,",
-						"          Value",
+						"          Value,",
+						"          text",
 						"     ),",
 						"     partitionBy('hash', 1)) ~> CleanData"
 					]
