@@ -482,7 +482,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> csvinput",
 						"csvinput derive({Month } = toDate({Month },'MM/dd/yyyy'),",
-						"          Value = toLong(Value,'#,###,###,###,###')) ~> CreateCleanData",
+						"          Value = toLong(Value,'##,###,###,###,###')) ~> CreateCleanData",
 						"CreateCleanData derive(text = concat(concat(concat(concat(concat(concat(toString({Month }), \"|\"),{Metric }),\"|\"),Type),\"|\"),toString(Value))) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
