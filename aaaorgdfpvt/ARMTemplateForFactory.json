@@ -3529,10 +3529,6 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     mapColumn(",
-						"          DateTime = {Month },",
-						"          Metric = {Metric },",
-						"          Type,",
-						"          Value,",
 						"          text",
 						"     ),",
 						"     partitionBy('hash', 1)) ~> CleanData"
