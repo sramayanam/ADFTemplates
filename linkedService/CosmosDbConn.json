@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "CosmosDb",
 		"typeProperties": {
-			"connectionString": "AccountEndpoint=https://srramcosmos.documents.azure.com:443/;Database=reviews;",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDdEMThGNEY0LTU5MUUtNEY2QS05MjJGLUYzNjMyOTE0NDY4OV8yMDU3OGM5ZC05YWU1LTQzZDItYWZkYy1kOWUwMDgyZTM2NGMiDQp9"
+			"connectionString": "AccountEndpoint=https://db-helpingclientssucceed.documents.azure.com:443/;Database=db_conversation_history;",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDRFODIxRDU3LUFDNTMtNEU2Qy05QzgwLUE0MDFFNTgwNUZFQ182NzE2YmQyNC0yYTMzLTRhN2UtODA0NS0zOWU5MDMyMmZlZGIiDQp9"
 		}
 	}
 }
