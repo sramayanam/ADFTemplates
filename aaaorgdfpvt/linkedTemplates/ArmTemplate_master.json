@@ -11,9 +11,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"AzureDataLakeStore_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStore'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
 		"AzureSynapseAnalytics1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
+		},
+		"CosmosDbConn_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CosmosDbConn'"
 		},
 		"PostgreSql1_password": {
 			"type": "secureString",
@@ -31,13 +43,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'sqlserversecured'"
 		},
-		"AzureSqlDatabase1_connectionString": {
+		"AIAzureDataLakeStorage_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+			"metadata": "Secure string for 'accountKey' of 'AIAzureDataLakeStorage'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dmtcstoragesecured.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStore_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://srramstorage.dfs.core.windows.net/"
+		},
+		"CallCategorize_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://intelligent-query-service.azure-api.net/categorize/classify"
 		},
 		"PostgreSql1_properties_typeProperties_server": {
 			"type": "string",
@@ -50,6 +70,42 @@
 		"PostgreSql1_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "postgres"
+		},
+		"AzureDataLakeStorageSecured_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/fc0ba10d-1810-4599-a776-0f13abc38f28/resourceGroups/rg-analytics/providers/Microsoft.Storage/storageAccounts/dmtcstoragesecured"
+		},
+		"AzureDataLakeStorageSecured_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"Purview104_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/fc0ba10d-1810-4599-a776-0f13abc38f28/resourceGroups/rg-analytics/providers/Microsoft.Purview/accounts/aaaorgpurview"
+		},
+		"Purview104_properties_groupId": {
+			"type": "string",
+			"defaultValue": "account"
+		},
+		"Purview104_blob_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/ae73da88-2bad-4a45-8627-0a137149dd32/resourceGroups/ingestion-storage-rg-eastus2-9/providers/Microsoft.Storage/storageAccounts/ingestioneus2wermhkf"
+		},
+		"Purview104_blob_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"Purview104_queue_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/ae73da88-2bad-4a45-8627-0a137149dd32/resourceGroups/ingestion-storage-rg-eastus2-9/providers/Microsoft.Storage/storageAccounts/ingestioneus2wermhkf"
+		},
+		"Purview104_queue_properties_groupId": {
+			"type": "string",
+			"defaultValue": "queue"
+		},
+		"AIAzureDataLakeStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dmtcaistorage.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -81,35 +137,32 @@
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					},
-					"AzureSynapseAnalytics1_connectionString": {
-						"value": "[parameters('AzureSynapseAnalytics1_connectionString')]"
+					"AzureDataLakeStore_accountKey": {
+						"value": "[parameters('AzureDataLakeStore_accountKey')]"
 					},
 					"AzureSqlDatabase1_connectionString": {
 						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
 					},
-					"PostgreSql1_password": {
-						"value": "[parameters('PostgreSql1_password')]"
+					"AzureSynapseAnalytics1_connectionString": {
+						"value": "[parameters('AzureSynapseAnalytics1_connectionString')]"
 					},
-					"SQLDatabase_connectionString": {
-						"value": "[parameters('SQLDatabase_connectionString')]"
+					"CosmosDbConn_connectionString": {
+						"value": "[parameters('CosmosDbConn_connectionString')]"
 					},
-					"SqlServeronprem_connectionString": {
-						"value": "[parameters('SqlServeronprem_connectionString')]"
-					},
-					"sqlserversecured_connectionString": {
-						"value": "[parameters('sqlserversecured_connectionString')]"
+					"AIAzureDataLakeStorage_accountKey": {
+						"value": "[parameters('AIAzureDataLakeStorage_accountKey')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
-					"PostgreSql1_properties_typeProperties_server": {
-						"value": "[parameters('PostgreSql1_properties_typeProperties_server')]"
+					"AzureDataLakeStore_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStore_properties_typeProperties_url')]"
 					},
-					"PostgreSql1_properties_typeProperties_database": {
-						"value": "[parameters('PostgreSql1_properties_typeProperties_database')]"
+					"CallCategorize_properties_typeProperties_url": {
+						"value": "[parameters('CallCategorize_properties_typeProperties_url')]"
 					},
-					"PostgreSql1_properties_typeProperties_username": {
-						"value": "[parameters('PostgreSql1_properties_typeProperties_username')]"
+					"AIAzureDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('AIAzureDataLakeStorage_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -128,11 +181,76 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"PostgreSql1_password": {
+						"value": "[parameters('PostgreSql1_password')]"
+					},
+					"SQLDatabase_connectionString": {
+						"value": "[parameters('SQLDatabase_connectionString')]"
+					},
+					"SqlServeronprem_connectionString": {
+						"value": "[parameters('SqlServeronprem_connectionString')]"
+					},
+					"sqlserversecured_connectionString": {
+						"value": "[parameters('sqlserversecured_connectionString')]"
+					},
+					"PostgreSql1_properties_typeProperties_server": {
+						"value": "[parameters('PostgreSql1_properties_typeProperties_server')]"
+					},
+					"PostgreSql1_properties_typeProperties_database": {
+						"value": "[parameters('PostgreSql1_properties_typeProperties_database')]"
+					},
+					"PostgreSql1_properties_typeProperties_username": {
+						"value": "[parameters('PostgreSql1_properties_typeProperties_username')]"
+					},
+					"AzureDataLakeStorageSecured_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureDataLakeStorageSecured_properties_privateLinkResourceId')]"
+					},
+					"AzureDataLakeStorageSecured_properties_groupId": {
+						"value": "[parameters('AzureDataLakeStorageSecured_properties_groupId')]"
+					},
+					"Purview104_properties_privateLinkResourceId": {
+						"value": "[parameters('Purview104_properties_privateLinkResourceId')]"
+					},
+					"Purview104_properties_groupId": {
+						"value": "[parameters('Purview104_properties_groupId')]"
+					},
+					"Purview104_blob_properties_privateLinkResourceId": {
+						"value": "[parameters('Purview104_blob_properties_privateLinkResourceId')]"
+					},
+					"Purview104_blob_properties_groupId": {
+						"value": "[parameters('Purview104_blob_properties_groupId')]"
+					},
+					"Purview104_queue_properties_privateLinkResourceId": {
+						"value": "[parameters('Purview104_queue_properties_privateLinkResourceId')]"
+					},
+					"Purview104_queue_properties_groupId": {
+						"value": "[parameters('Purview104_queue_properties_groupId')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'aaaorgdfpvt_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "aaaorgdfpvt_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'aaaorgdfpvt_ArmTemplate_1')]"
 			]
 		}
 	]

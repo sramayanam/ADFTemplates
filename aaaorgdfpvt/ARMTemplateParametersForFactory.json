@@ -8,7 +8,16 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureDataLakeStore_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
 		"AzureSynapseAnalytics1_connectionString": {
+			"value": ""
+		},
+		"CosmosDbConn_connectionString": {
 			"value": ""
 		},
 		"PostgreSql1_password": {
@@ -23,11 +32,17 @@
 		"sqlserversecured_connectionString": {
 			"value": ""
 		},
-		"AzureSqlDatabase1_connectionString": {
+		"AIAzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://dmtcstoragesecured.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStore_properties_typeProperties_url": {
+			"value": "https://srramstorage.dfs.core.windows.net/"
+		},
+		"CallCategorize_properties_typeProperties_url": {
+			"value": "https://intelligent-query-service.azure-api.net/categorize/classify"
 		},
 		"PostgreSql1_properties_typeProperties_server": {
 			"value": "10.0.0.5"
@@ -37,6 +52,33 @@
 		},
 		"PostgreSql1_properties_typeProperties_username": {
 			"value": "postgres"
+		},
+		"AzureDataLakeStorageSecured_properties_privateLinkResourceId": {
+			"value": "/subscriptions/fc0ba10d-1810-4599-a776-0f13abc38f28/resourceGroups/rg-analytics/providers/Microsoft.Storage/storageAccounts/dmtcstoragesecured"
+		},
+		"AzureDataLakeStorageSecured_properties_groupId": {
+			"value": "dfs"
+		},
+		"Purview104_properties_privateLinkResourceId": {
+			"value": "/subscriptions/fc0ba10d-1810-4599-a776-0f13abc38f28/resourceGroups/rg-analytics/providers/Microsoft.Purview/accounts/aaaorgpurview"
+		},
+		"Purview104_properties_groupId": {
+			"value": "account"
+		},
+		"Purview104_blob_properties_privateLinkResourceId": {
+			"value": "/subscriptions/ae73da88-2bad-4a45-8627-0a137149dd32/resourceGroups/ingestion-storage-rg-eastus2-9/providers/Microsoft.Storage/storageAccounts/ingestioneus2wermhkf"
+		},
+		"Purview104_blob_properties_groupId": {
+			"value": "blob"
+		},
+		"Purview104_queue_properties_privateLinkResourceId": {
+			"value": "/subscriptions/ae73da88-2bad-4a45-8627-0a137149dd32/resourceGroups/ingestion-storage-rg-eastus2-9/providers/Microsoft.Storage/storageAccounts/ingestioneus2wermhkf"
+		},
+		"Purview104_queue_properties_groupId": {
+			"value": "queue"
+		},
+		"AIAzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://dmtcaistorage.dfs.core.windows.net/"
 		}
 	}
 }

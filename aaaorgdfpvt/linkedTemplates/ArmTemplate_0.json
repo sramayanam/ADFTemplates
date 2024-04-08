@@ -11,45 +11,41 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
-		"AzureSynapseAnalytics1_connectionString": {
+		"AzureDataLakeStore_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStore'"
 		},
 		"AzureSqlDatabase1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
 		},
-		"PostgreSql1_password": {
+		"AzureSynapseAnalytics1_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'PostgreSql1'"
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
 		},
-		"SQLDatabase_connectionString": {
+		"CosmosDbConn_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SQLDatabase'"
+			"metadata": "Secure string for 'connectionString' of 'CosmosDbConn'"
 		},
-		"SqlServeronprem_connectionString": {
+		"AIAzureDataLakeStorage_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServeronprem'"
-		},
-		"sqlserversecured_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'sqlserversecured'"
+			"metadata": "Secure string for 'accountKey' of 'AIAzureDataLakeStorage'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dmtcstoragesecured.dfs.core.windows.net/"
 		},
-		"PostgreSql1_properties_typeProperties_server": {
+		"AzureDataLakeStore_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "10.0.0.5"
+			"defaultValue": "https://srramstorage.dfs.core.windows.net/"
 		},
-		"PostgreSql1_properties_typeProperties_database": {
+		"CallCategorize_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "demo"
+			"defaultValue": "https://intelligent-query-service.azure-api.net/categorize/classify"
 		},
-		"PostgreSql1_properties_typeProperties_username": {
+		"AIAzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "postgres"
+			"defaultValue": "https://dmtcaistorage.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -74,25 +70,19 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalytics1')]",
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStore')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "AzureSqlDW",
+				"type": "AzureBlobFS",
 				"typeProperties": {
-					"connectionString": "[parameters('AzureSynapseAnalytics1_connectionString')]"
+					"url": "[parameters('AzureDataLakeStore_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStore_accountKey')]"
+					}
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/vnetshir')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
 			},
 			"dependsOn": []
 		},
@@ -108,6 +98,155 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalytics1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSynapseAnalytics1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CallCategorize')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('CallCategorize_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Ocp-Apim-Subscription-Key": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDbConn')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('CosmosDbConn_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vnetshir')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AIAzureDataLakeStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AIAzureDataLakeStorage_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AIAzureDataLakeStorage_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Reviews.csv",
+						"fileSystem": "reviews"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStore')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dbcontainer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CosmosDbConn",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {
+					"type": "object",
+					"properties": {
+						"log": {
+							"type": "null"
+						},
+						"response": {
+							"type": "string"
+						},
+						"promptTokens": {
+							"type": "integer"
+						},
+						"responseTokens": {
+							"type": "integer"
+						}
+					}
+				},
+				"typeProperties": {
+					"collectionName": "logs"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/CosmosDbConn')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_any_file')]",
@@ -208,7 +347,224 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_any_file13')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_folder": {
+						"type": "string"
+					},
+					"ds_filename": {
+						"type": "string"
+					},
+					"ds_container": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().ds_filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().ds_folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().ds_container",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_any_file131')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_folder": {
+						"type": "string"
+					},
+					"ds_filename": {
+						"type": "string"
+					},
+					"ds_container": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().ds_filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().ds_folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().ds_container",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_sql_db_any_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ds_schema": {
+						"type": "string"
+					},
+					"ds_tablename": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().ds_schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().ds_tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_synapse')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ingestion pattern datasets"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "source_table",
+						"type": "varchar"
+					},
+					{
+						"name": "dest_table",
+						"type": "varchar"
+					},
+					{
+						"name": "source_path",
+						"type": "varchar"
+					},
+					{
+						"name": "target_path",
+						"type": "varchar"
+					},
+					{
+						"name": "flow_sequence",
+						"type": "varchar"
+					},
+					{
+						"name": "run_status",
+						"type": "varchar"
+					},
+					{
+						"name": "qstring",
+						"type": "varchar"
+					},
+					{
+						"name": "watermark_col",
+						"type": "nvarchar"
+					},
+					{
+						"name": "watermark_val",
+						"type": "nvarchar"
+					},
+					{
+						"name": "key_column",
+						"type": "varchar"
+					},
+					{
+						"name": "source_name",
+						"type": "varchar"
+					},
+					{
+						"name": "load_type",
+						"type": "varchar"
+					},
+					{
+						"name": "start_run",
+						"type": "varchar"
+					},
+					{
+						"name": "source_id",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "control_table"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_synapse1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -384,308 +740,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PostgreSql1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "PostgreSqlV2",
-				"typeProperties": {
-					"server": "[parameters('PostgreSql1_properties_typeProperties_server')]",
-					"port": 5432,
-					"database": "[parameters('PostgreSql1_properties_typeProperties_database')]",
-					"username": "[parameters('PostgreSql1_properties_typeProperties_username')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('PostgreSql1_password')]"
-					},
-					"sslMode": 2,
-					"authenticationType": "Basic"
-				},
-				"connectVia": {
-					"referenceName": "vnetshir",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/vnetshir')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQLDatabase')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SQLDatabase_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "vnetshir",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/vnetshir')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServeronprem')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SqlServeronprem_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "vnetshir",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/vnetshir')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sqlserversecured')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('sqlserversecured_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "vnetshir",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/vnetshir')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_synapse1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ingestion pattern datasets"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "source_table",
-						"type": "varchar"
-					},
-					{
-						"name": "dest_table",
-						"type": "varchar"
-					},
-					{
-						"name": "source_path",
-						"type": "varchar"
-					},
-					{
-						"name": "target_path",
-						"type": "varchar"
-					},
-					{
-						"name": "flow_sequence",
-						"type": "varchar"
-					},
-					{
-						"name": "run_status",
-						"type": "varchar"
-					},
-					{
-						"name": "qstring",
-						"type": "varchar"
-					},
-					{
-						"name": "watermark_col",
-						"type": "nvarchar"
-					},
-					{
-						"name": "watermark_val",
-						"type": "nvarchar"
-					},
-					{
-						"name": "key_column",
-						"type": "varchar"
-					},
-					{
-						"name": "source_name",
-						"type": "varchar"
-					},
-					{
-						"name": "load_type",
-						"type": "varchar"
-					},
-					{
-						"name": "start_run",
-						"type": "varchar"
-					},
-					{
-						"name": "source_id",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "control_table"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_sql_db_any_table')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"ds_schema": {
-						"type": "string"
-					},
-					"ds_tablename": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "ingestion pattern datasets"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().ds_schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().ds_tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_any_file13')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"ds_folder": {
-						"type": "string"
-					},
-					"ds_filename": {
-						"type": "string"
-					},
-					"ds_container": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "ingestion pattern datasets"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().ds_filename",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().ds_folder",
-							"type": "Expression"
-						},
-						"fileSystem": {
-							"value": "@dataset().ds_container",
-							"type": "Expression"
-						}
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_adls_parquet_any_file131')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"ds_folder": {
-						"type": "string"
-					},
-					"ds_filename": {
-						"type": "string"
-					},
-					"ds_container": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "ingestion pattern datasets"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().ds_filename",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().ds_folder",
-							"type": "Expression"
-						},
-						"fileSystem": {
-							"value": "@dataset().ds_container",
-							"type": "Expression"
-						}
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_synapse_anytable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -778,131 +832,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SqlServeronprem",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"ds_schema": {
-						"type": "string",
-						"defaultValue": "Production"
-					},
-					"ds_tablename": {
-						"type": "string",
-						"defaultValue": "Product"
-					}
-				},
-				"folder": {
-					"name": "ingestion pattern datasets"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().ds_schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().ds_tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SqlServeronprem')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_adls_synapse_history')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Ingestion pattern dataflows"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_adls_parquet_any_file12",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_synapse_anytable",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "DerivedColumn1"
-						}
-					],
-					"script": "parameters{\n\tdf_schema as string,\n\tdf_table as string,\n\tds_folder as string,\n\tdf_watermark_col as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:[(concat($ds_folder,'/*.parquet'))]) ~> source1\nsource1 derive(last_update_tmstp = currentUTC()) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tsource_table as string,\n\t\tdest_table as string,\n\t\tsource_path as string,\n\t\ttarget_path as string,\n\t\tflow_sequence as string,\n\t\trun_status as string,\n\t\tqstring as string,\n\t\twatermark_col as string,\n\t\twatermark_val as string,\n\t\tkey_column as string,\n\t\tsource_name as string,\n\t\tload_type as string,\n\t\tstart_run as string,\n\t\tsource_id as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tstaged: true,\n\tallowCopyCommand: true,\n\tpreSQLs:[(\" TRUNCATE TABLE {$df_schema}.{$df_table}\")],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file12')]",
-				"[concat(variables('factoryId'), '/datasets/ds_synapse_anytable')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_adls_synapse_current')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Ingestion pattern dataflows"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_adls_parquet_any_file131",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_synapse_anytable1",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "AlterRow1"
-						},
-						{
-							"name": "DerivedColumn1"
-						}
-					],
-					"script": "parameters{\n\tcols as string[]\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~> source1\nDerivedColumn1 alterRow(upsertIf(true())) ~> AlterRow1\nsource1 derive(last_update_tmstp = currentUTC()) ~> DerivedColumn1\nAlterRow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tsource_table as string,\n\t\tdest_table as string,\n\t\tsource_path as string,\n\t\ttarget_path as string,\n\t\tflow_sequence as string,\n\t\trun_status as string,\n\t\tqstring as string,\n\t\twatermark_col as string,\n\t\twatermark_val as string,\n\t\tkey_column as string,\n\t\tsource_name as string,\n\t\tload_type as string,\n\t\tstart_run as string,\n\t\tsource_id as string\n\t),\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:($cols),\n\tformat: 'table',\n\tstaged: true,\n\tallowCopyCommand: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_adls_parquet_any_file131')]",
-				"[concat(variables('factoryId'), '/datasets/ds_synapse_anytable1')]"
 			]
 		}
 	]
